@@ -1,0 +1,19 @@
+# Build artifacts
+/bin/
+*.test
+*.out
+
+# Compiled exercise binaries (we run them with `go run`, no need to commit)
+/step1_mmap_basic
+/step2_naive_remap
+/step3_chunked_mmap
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Test scratch files (created by tests / exercises in /tmp)
+# (nothing to ignore here since /tmp is outside the repo)
