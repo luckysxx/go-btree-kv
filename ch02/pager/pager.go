@@ -122,14 +122,7 @@ func (p *Pager) GetPage(id uint64) []byte {
 //  1. id = 当前 nPages
 //  2. nPages++
 //  3. 如果文件 / mmap 不够大，growMmap
-//
-// TODO（你来写）：实现这 3 步
 func (p *Pager) NewPage() (uint64, []byte, error) {
-	// TODO 1: 取 id = p.nPages
-	// TODO 2: p.nPages++
-	// TODO 3: 计算新 nPages 需要多少字节 = p.nPages * PageSize
-	//         如果超过 p.fileSize，调用 p.growMmap(...)
-	// TODO 4: 返回 (id, p.GetPage(id), nil)
 	id := p.nPages
 	p.nPages++
 	needBytes := int64(p.nPages * PageSize)
@@ -151,12 +144,7 @@ func (p *Pager) NewPage() (uint64, []byte, error) {
 //
 // 顺序很关键：必须先把 nPages 写进 page 0 的字节里，再 fsync 整个文件，
 // 这样 fsync 才会把"更新后的 page 0"一起刷下去。
-//
-// TODO（你来写）
 func (p *Pager) Flush() error {
-	// TODO 1: meta := p.GetPage(MetaPage)
-	// TODO 2: binary.LittleEndian.PutUint64(meta[offNPages:], p.nPages)
-	// TODO 3: return p.fp.Sync()
 	meta := p.GetPage(MetaPage)
 	binary.LittleEndian.PutUint64(meta[offNPages:], p.nPages)
 	return p.fp.Sync()
