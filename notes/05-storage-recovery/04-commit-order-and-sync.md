@@ -113,7 +113,7 @@ WAL 提交时只 fsync 日志，数据页之后由 checkpoint 原地写回；数
 
 ## 大纲
 
-- 文件增长：先扩文件再写，扩长本身的持久性；新建文件后同步父目录（未展开）。
+- 文件增长：先扩文件再写，扩长本身的持久性（未展开）。新建文件后同步父目录见 [父目录的同步](../01-file-persistence/04-write-sync-and-errors.md#父目录的同步)。
 - 设备层：FUA、写缓存与掉电保护，fsync 在不同平台上的实际语义（macOS 的 F_FULLFSYNC 见 [写入、同步与错误](../01-file-persistence/04-write-sync-and-errors.md)）（未展开）。
 
 [本组目录](README.md)

@@ -7,7 +7,7 @@
 | 1 | [Unix 文件 API](01-unix-file-api.md) | 已有正文 | fd、打开标志、权限、系统调用、查文档 |
 | 2 | [数据位置、可见性与持久性](02-data-visibility-durability.md) | 已有正文 | 三个维度、页缓存与进程退出、后台写回、mmap |
 | 3 | [原子性与并发控制](03-atomicity-and-concurrency.md) | 已有正文 | rename 替换、lost update、多进程打开与协作式锁 |
-| 4 | [写入、同步与错误边界](04-write-sync-and-errors.md) | 部分已整理 | 脏页、fsync 的作用范围、平台与父目录、失败承诺 |
+| 4 | [写入、同步与错误边界](04-write-sync-and-errors.md) | 部分已整理 | 脏页、fsync 的作用范围、父目录的同步、平台与设备、失败承诺 |
 | 5 | [临时文件与原子替换](05-atomic-file-replacement.md) | 部分已整理 | 临时文件 + rename、父目录同步 |
 | 6 | [hexdump 与文件观察](06-hexdump-and-file-inspection.md) | 已有正文 | 逐字节查看、dbdump |
 | 7 | [文件与进程观察工具](07-file-inspection-tools.md) | 部分已整理 | 其他工具大纲 |
