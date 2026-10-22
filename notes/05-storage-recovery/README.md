@@ -15,4 +15,4 @@
 
 磁盘发布的三个条件已在 [根分裂与发布](../04-btree-tree/04-root-split-and-publication.md#发布到磁盘上的条件) 中预先讲过，E4、E5 会在此基础上展开。代码入口：[pager.go](../../pager/pager.go)、[B+Tree 函数地图](../../btree/README.md)。
 
-返回 [存储笔记总目录](../README.md) · [完整清单](../../../docs/curriculum.md)。
+返回 [存储笔记总目录](../README.md)。

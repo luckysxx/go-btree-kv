@@ -8,6 +8,7 @@
 /step2_naive_remap
 /step3_chunked_mmap
 /dbdump
+/cmd/dbdump/dbdump
 
 # OS
 .DS_Store
@@ -16,5 +17,3 @@
 .vscode/
 .idea/
 
-# Test scratch files (created by tests / exercises in /tmp)
-# (nothing to ignore here since /tmp is outside the repo)

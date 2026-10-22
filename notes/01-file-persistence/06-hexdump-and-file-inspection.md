@@ -67,7 +67,7 @@ od -A x -t x1z -v <文件>
 
 ## 本项目的格式观察入口
 
-[dbdump](../../cmd/dbdump/main.go) 将现有 Pager 格式中的页号、元信息和字节翻译为输出。在 `storage/` 目录运行：
+[dbdump](../../cmd/dbdump/main.go) 将现有 Pager 格式中的页号、元信息和字节翻译为输出。在仓库根目录运行：
 
 ```bash
 go run ./cmd/dbdump <文件>

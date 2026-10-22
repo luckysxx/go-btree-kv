@@ -14,7 +14,7 @@ import (
 	"strings"
 	"testing"
 
-	"dbstudy/pager"
+	"github.com/luckysxx/go-btree-kv/pager"
 )
 
 var errInjected = errors.New("injected fault")
@@ -301,13 +301,13 @@ func TestPickMeta(t *testing.T) {
 	errBad := fmt.Errorf("%w: test", ErrMetaChecksum)
 	errVersion := fmt.Errorf("%w: test", ErrVersionMismatch)
 	cases := []struct {
-		name       string
-		m0         meta
-		err0       error
-		m1         meta
-		err1       error
-		want       meta
-		wantErr    error
+		name    string
+		m0      meta
+		err0    error
+		m1      meta
+		err1    error
+		want    meta
+		wantErr error
 	}{
 		{"both-valid-slot1-newer", older, nil, newer, nil, newer, nil},
 		{"both-valid-slot0-newer", meta{root: 5, highWater: 6, txid: 6}, nil, newer, nil, meta{root: 5, highWater: 6, txid: 6}, nil},

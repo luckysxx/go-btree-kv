@@ -138,7 +138,7 @@ value 借用页内字节，调用者不能修改；页回收或接入 Pager 后�
 - 叶子 sibling 字段保留在页格式中，但 CoW 树不维护叶子链（更新一张叶子需复制其左侧所有叶子），当前恒为 0；扫描由游标沿路径栈完成。leafInsertSplit 的最右页继承旧 sibling 只是沿用旧约定。
 - 新页是内存字节，不涉及磁盘页分配、刷盘、根切换或事务提交。
 
-[节点定位笔记](../notes/03-btree-pages/03-node-format-and-record-addressing.md) · [leafSeek](../notes/03-btree-pages/04-leaf-search-and-insertion-position.md) · [页重建](../notes/03-btree-pages/05-leaf-rebuild-and-ownership.md) · [容量检查](../notes/03-btree-pages/06-leaf-capacity-and-errors.md) · [当前状态](../../docs/status.md)
+[节点定位笔记](../notes/03-btree-pages/03-node-format-and-record-addressing.md) · [leafSeek](../notes/03-btree-pages/04-leaf-search-and-insertion-position.md) · [页重建](../notes/03-btree-pages/05-leaf-rebuild-and-ownership.md) · [容量检查](../notes/03-btree-pages/06-leaf-capacity-and-errors.md)
 
 [分裂切点选择](../notes/03-btree-pages/07-byte-based-split-point.md)
 

@@ -67,7 +67,7 @@ bbolt 同样递归携带 `[minKey, maxKey)` 检查 key 的顺序。它多做的�
 
 ## 层级边界
 
-这里只验证内存中的逻辑结构。落盘格式、提交顺序、重启恢复与 I/O 故障属于 [E 组](../../../docs/curriculum.md#e) 与批次 4，不能由本篇的检查推出。
+这里只验证内存中的逻辑结构。落盘格式、提交顺序、重启恢复与 I/O 故障属于 [E 组](../05-storage-recovery/README.md)，不能由本篇的检查推出。
 
 ## 大纲
 
@@ -78,4 +78,4 @@ bbolt 同样递归携带 `[minKey, maxKey)` 检查 key 的顺序。它多做的�
 
 [check_test.go](../../btree/check_test.go)：健康树（空树高 1、两层树高 2）通过；六种人为损坏各自被识别（两个目录项指向同一页、minKey 过时、key 越过右边界、叶子深度不同、非根空叶子、sibling 非 0）；缺页返回 ErrPageNotFound。
 
-前置：[删除与根收缩](06-delete-rebalance-and-root-shrink.md)。后续：[单机提交、恢复与空间管理](../../../docs/curriculum.md#e)。返回 [整树组目录](README.md)。
+前置：[删除与根收缩](06-delete-rebalance-and-root-shrink.md)。后续：[单机提交、恢复与空间管理](../05-storage-recovery/README.md)。返回 [整树组目录](README.md)。

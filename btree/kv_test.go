@@ -10,7 +10,7 @@ import (
 	"sync"
 	"testing"
 
-	"dbstudy/btree"
+	"github.com/luckysxx/go-btree-kv/btree"
 )
 
 func openKV(t *testing.T, path string) *btree.DB {

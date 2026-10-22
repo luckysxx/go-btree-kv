@@ -1,6 +1,6 @@
 # B+Tree 与 LSM：有序页和不可变文件的取舍
 
-状态：部分已整理 · LSM 的实现在 [lsm/](../../../lsm/README.md)
+状态：部分已整理 · LSM 的实现在 [rust-lsm](https://github.com/luckysxx/rust-lsm)
 
 ## LSM 的基本思路
 
@@ -87,7 +87,7 @@ memtable ──flush──→ L0：刚刷下的文件，彼此 key 范围可重�
 
 代价是**写放大**：一条数据从 L0 逐层合并到 Ln，会被反复读出、重写。
 
-SST 不可变，写完不再修改，天然适合放在对象存储上（例如 SlateDB 直接建在对象存储上）；原地修改页的 B+Tree 难以这样部署。WAL 与 MANIFEST 在对象存储上要另行处理，见通用笔记 [[_knowledge/数据库/07-文件系统、对象存储与存储引擎|文件系统、对象存储与存储引擎]]。
+SST 不可变，写完不再修改，天然适合放在对象存储上（例如 SlateDB 直接建在对象存储上）；原地修改页的 B+Tree 难以这样部署。WAL 与 MANIFEST 在对象存储上要另行处理，见通用笔记《文件系统、对象存储与存储引擎》。
 
 ## 崩溃与 WAL
 
@@ -198,16 +198,16 @@ RUM 猜想概括了这类取舍：读的开销（Read）、写的开销（Update
 
 省掉一层的思路：引擎不单独记 WAL，崩溃后从已 apply 的位置重放 Raft 日志。前提是引擎写入数据时能把 applied index **原子地**一起发布，否则会重复 apply 或漏掉——与 B+Tree 中根页号和高水位由同一次 meta 写入发布同理（见 Raft 的 KV/applied 应用协议，路线图批次 6）。etcd 是另一种分层：Raft 日志存在 etcd 自己的 WAL 中，状态机写入 bbolt，bbolt 本身没有 WAL（CoW + meta 原子发布）。
 
-数据库 WAL 的工作方式、它与 Raft 日志的逐项对照，见通用笔记 [[_knowledge/数据库/05-预写日志与复制日志|预写日志与复制日志]]。B+Tree 与 LSM 之外的结构（消息队列的追加日志、时序与列式存储）见 [[_knowledge/数据库/06-各类数据系统的存储结构|各类数据系统的存储结构]]。WAL 与 CoW 两种崩溃一致性路线的对比见 [与 WAL 的区别](../04-btree-tree/04-root-split-and-publication.md#与-wal-的区别)。
+数据库 WAL 的工作方式、它与 Raft 日志的逐项对照，见通用笔记《预写日志与复制日志》。B+Tree 与 LSM 之外的结构（消息队列的追加日志、时序与列式存储）见通用笔记《各类数据系统的存储结构》。WAL 与 CoW 两种崩溃一致性路线的对比见 [与 WAL 的区别](../04-btree-tree/04-root-split-and-publication.md#与-wal-的区别)。
 
 ## 大纲
 
-以下各项在 [LSM 引擎的实现笔记](../../../lsm/notes/README.md) 中展开，本篇不再重复：
+以下各项在 [LSM 引擎的实现笔记](https://github.com/luckysxx/rust-lsm/blob/main/notes/README.md) 中展开，本篇不再重复：
 
 - memtable 的并发结构（跳表）与 immutable memtable 切换。
 - SST 内部格式：数据块、索引块、Bloom filter、footer。
 - leveled 与 tiered compaction 的策略选择、compaction 调度与限速。
-- 三种放大怎样取数：[基准方案与三种放大的测量](../../../lsm/notes/01-benchmark-plan-and-amplification.md)。
+- 三种放大怎样取数：[基准方案与三种放大的测量](https://github.com/luckysxx/rust-lsm/blob/main/notes/01-benchmark-plan-and-amplification.md)。
 - 对照具体版本的开源源码（mini-lsm、Pebble、RocksDB）。
 
 返回 [本组目录](README.md)。

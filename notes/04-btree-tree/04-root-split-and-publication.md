@@ -57,7 +57,7 @@ insert 返回：[{a→6}, {d→7}]                ← 叶子 6{a b c}、7{d e f}
 | 写 meta 写到一半 | 校验和不对 → 用另一个 meta → 完整旧树 |
 | 第二次 fsync 之后 | 完整新树 |
 
-经 mmap 修改的页，内核随时可以写回。新页提前写回无害（没有已落盘的 meta 引用它），危险的只有 meta：第一次 fsync 返回前不能改动它的任何字节。bbolt 读用 mmap、写用 `pwrite`，把顺序握在自己手里，详见 [提交顺序与同步](../05-storage-recovery/04-commit-order-and-sync.md)。当前 Pager 只有一个 meta、没有提交协议，这些条件在批次 4 补齐。
+经 mmap 修改的页，内核随时可以写回。新页提前写回无害（没有已落盘的 meta 引用它），危险的只有 meta：第一次 fsync 返回前不能改动它的任何字节。bbolt 读用 mmap、写用 `pwrite`，把顺序握在自己手里，详见 [提交顺序与同步](../05-storage-recovery/04-commit-order-and-sync.md)。这些条件由 E 组的双 meta 与提交顺序满足。
 
 思考题：两次 fsync 能否合并成一次？若能，需要什么前提？
 
@@ -75,10 +75,10 @@ insert 返回：[{a→6}, {d→7}]                ← 叶子 6{a b c}、7{d e f}
 
 共同的骨架：由一次小而原子的写决定提交（commit 记录 / meta），并且它依赖的内容必须先落盘（日志先于数据页 / 新页先于 meta）。meta 可以看作只存一条"当前根在哪"的日志。
 
-代价：CoW 写放大约为树高且多为随机写，换来无日志、恢复简单、读者天然看到快照；WAL 提交只顺序追加一条小记录，但要实现重放与 checkpoint，还要防护原地覆盖的 torn page（如 InnoDB 的 doublewrite）。代表：InnoDB、PostgreSQL、SQLite WAL 模式 / bbolt、LMDB。本项目中 WAL 会出现在 Raft 的磁盘日志（批次 6）与 Rust 阶段的 LSM。数据库 WAL 的内部机制（write-ahead 规则、checkpoint、重做与撤销）及其与 Raft 日志的区别见通用笔记 [[_knowledge/数据库/05-预写日志与复制日志|预写日志与复制日志]]。路线比较另见 [原地更新与 CoW](../05-storage-recovery/01-in-place-update-and-cow.md)，业界选型见 [B+Tree 与 LSM](../06-storage-comparisons/03-btree-and-lsm.md)。
+代价：CoW 写放大约为树高且多为随机写，换来无日志、恢复简单、读者天然看到快照；WAL 提交只顺序追加一条小记录，但要实现重放与 checkpoint，还要防护原地覆盖的 torn page（如 InnoDB 的 doublewrite）。代表：InnoDB、PostgreSQL、SQLite WAL 模式 / bbolt、LMDB。本项目中 WAL 会出现在 Raft 的磁盘日志（批次 6）与 Rust 阶段的 LSM。数据库 WAL 的内部机制（write-ahead 规则、checkpoint、重做与撤销）及其与 Raft 日志的区别见通用笔记《预写日志与复制日志》。路线比较另见 [原地更新与 CoW](../05-storage-recovery/01-in-place-update-and-cow.md)，业界选型见 [B+Tree 与 LSM](../06-storage-comparisons/03-btree-and-lsm.md)。
 
 ## 测试
 
 [tree_test.go](../../btree/tree_test.go)：`TestTreePutRootLeafSplit`（根叶子分裂，树高 1 → 2，旧根仍是树高 1 的旧版本）；`TestTreePutGrowsFromEmpty`（从空树随机插入 4000 条短 key 与 300 条 1000 字节 key，每步做全树检查，每次长高留快照，最大树高至少 3，最后与参考 map 及全部快照对照）；`TestRootSplitEntriesFitInOnePage`（新根装得下一页的前提）。
 
-前置：[递归 Put 与路径复制](03-recursive-put-and-path-copy.md)。后续：[扫描与叶子链接](05-scan-and-leaf-links.md)。磁盘提交另见 [E 组清单](../../../docs/curriculum.md#e)。返回 [整树组目录](README.md)。
+前置：[递归 Put 与路径复制](03-recursive-put-and-path-copy.md)。后续：[扫描与叶子链接](05-scan-and-leaf-links.md)。磁盘提交另见 [E 组](../05-storage-recovery/README.md)。返回 [整树组目录](README.md)。

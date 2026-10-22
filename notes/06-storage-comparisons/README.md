@@ -9,6 +9,6 @@
 | K3 | [B+Tree 与 LSM](03-btree-and-lsm.md) | 部分已整理 | 从追加日志推出 LSM、墓碑、compaction 与分层、WAL 与 MANIFEST、三种放大、业界选型 |
 | K4 | [MVCC 与版本回收](04-mvcc-and-version-reclamation.md) | 部分已整理 | CoW 快照与多版本的区别、回收条件 |
 
-产品细节以具体版本的源码和文档为准。页级更新的对照见 [E1 原地更新与 CoW](../05-storage-recovery/01-in-place-update-and-cow.md)。参考源码与论文见 [references](../../../references/README.md)。
+产品细节以具体版本的源码和文档为准。页级更新的对照见 [E1 原地更新与 CoW](../05-storage-recovery/01-in-place-update-and-cow.md)。参考源码见 [bbolt v1.5.0](https://github.com/etcd-io/bbolt/tree/v1.5.0)。
 
-返回 [存储笔记总目录](../README.md) · [完整知识点清单](../../../docs/curriculum.md#k)。
+返回 [存储笔记总目录](../README.md)。

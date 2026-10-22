@@ -72,7 +72,7 @@ CoW 每次修改都产出新页，旧页在新版本里不再被引用。只分�
 
 ## 工业对照：bbolt
 
-freelist（[internal/freelist/shared.go](../../../references/bbolt/internal/freelist/shared.go)）含 `pending map[Txid]…` 与 `readonlyTXIDs`。`beginTx` 登记读事务号，写事务开始时 `ReleasePendingPages` 取最小的读事务号，把更早事务的 pending 页移入可用列表（它只放出事务号严格小于最小读者的，比上面的规则保守一格）。`Rollback` 把回滚事务的 pending 页与分配记录撤销。freelist 默认作为页写入文件，其页号记在 meta 中；`NoFreelistSync` 时不写，打开时由 `db.freepages` 扫描全库重建。
+freelist（[internal/freelist/shared.go](https://github.com/etcd-io/bbolt/blob/v1.5.0/internal/freelist/shared.go)）含 `pending map[Txid]…` 与 `readonlyTXIDs`。`beginTx` 登记读事务号，写事务开始时 `ReleasePendingPages` 取最小的读事务号，把更早事务的 pending 页移入可用列表（它只放出事务号严格小于最小读者的，比上面的规则保守一格）。`Rollback` 把回滚事务的 pending 页与分配记录撤销。freelist 默认作为页写入文件，其页号记在 meta 中；`NoFreelistSync` 时不写，打开时由 `db.freepages` 扫描全库重建。
 
 ## LSM 中的对应
 

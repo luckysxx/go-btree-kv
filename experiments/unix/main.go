@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"dbstudy/experiments/internal/demofs"
+	"github.com/luckysxx/go-btree-kv/experiments/internal/demofs"
 )
 
 func main() {

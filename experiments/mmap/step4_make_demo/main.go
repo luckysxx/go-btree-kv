@@ -16,8 +16,8 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"dbstudy/experiments/internal/demofs"
-	"dbstudy/pager"
+	"github.com/luckysxx/go-btree-kv/experiments/internal/demofs"
+	"github.com/luckysxx/go-btree-kv/pager"
 )
 
 func main() {

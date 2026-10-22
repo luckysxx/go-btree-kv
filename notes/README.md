@@ -9,11 +9,12 @@
 | E 单机提交、恢复与空间管理 | [八篇](05-storage-recovery/README.md) | CoW 与原地更新、提交顺序、恢复、写批次、页回收、单机 API |
 | K 存储引擎深入对照 | [四篇](06-storage-comparisons/README.md) | 页内布局、长 key、LSM、MVCC |
 
-每篇标题下有一行状态：已有正文 / 部分已整理 / 未教学。部分已整理的篇在大纲中把未展开的项标"（未展开）"。
+每篇标题下有一行状态：已有正文（讲解完整）、部分已整理（有些项只列了要点，标"（未展开）"）、未教学（只有大纲）。
 
-## 代码、进度与资料
+前五组（A～E）按搭建这个引擎的顺序排列，从文件 API 一直讲到可恢复的单机 KV；K 组把它和其他设计（LSM、MVCC 等）对照。文中的"通用笔记《标题》""验证与观测笔记《标题》"指作者另外的笔记，尚未公开，只是延伸阅读，各篇不读它们也能看懂。LSM 的实现在另一个仓库 [rust-lsm](https://github.com/luckysxx/rust-lsm)。
 
-- [代码与实验运行](../README.md)、[B+Tree 函数地图](../btree/README.md)、[文件和 mmap 实验](../experiments/README.md)。
-- [实现与验证状态](../../docs/status.md)、[学习进度](../../docs/learning-progress.md)、[完整清单](../../docs/curriculum.md)。
-- [项目总目录](../../docs/index.md)、[学习路线](../../docs/roadmap.md)、[快速回忆](../../docs/refresh.md)。
-- [参考源码](../../references/README.md)。
+## 代码与资料
+
+- [代码与运行方式](../README.md)、[B+Tree 函数地图](../btree/README.md)、[文件和 mmap 实验](../experiments/README.md)。
+- [已知问题与限制](../README.md#已知问题与限制)。
+- 对照的源码是 [bbolt v1.5.0](https://github.com/etcd-io/bbolt/tree/v1.5.0)，链接都指向这个版本。

@@ -67,9 +67,4 @@ data:
 
 slice 的长度决定 Go 下标的可访问范围；映射与底层文件的状态还决定这次访问能否完成。两者不同，见 [页生命周期与 Pager 错误](06-page-lifetime-and-pager-errors.md)。
 
-## 跨项目阅读
-
-- [[os-learning/docs/notes/01-boot-and-addresses|启动、地址与指针]]：从代码装载和指针联系地址空间。
-- [[_knowledge/index|学习笔记总入口]]。
-
 下一篇：[页缓存与 mmap](03-page-cache-and-mmap.md) · [本组目录](README.md)。

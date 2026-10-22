@@ -1,6 +1,6 @@
 # 从页算法到完整 B+Tree
 
-本组把页内算法（C 组）组装成一棵完整的内存 CoW B+Tree，顺序是"页存取 → 查找 → 更新路径 → 根 → 扫描 → 删除 → 全树验证"。完整范围见 [D 组清单](../../../docs/curriculum.md#d)。
+本组把页内算法（C 组）组装成一棵完整的内存 CoW B+Tree，顺序是"页存取 → 查找 → 更新路径 → 根 → 扫描 → 删除 → 全树验证"。
 
 | 笔记 | 状态 | 主要内容 |
 | --- | --- | --- |
@@ -12,6 +12,6 @@
 | [06 删除、再平衡与根收缩](06-delete-rebalance-and-root-shrink.md) | 部分已整理 | 三种删除结果、摘除空页、根收缩；合并与借位未展开 |
 | [07 全树不变量与模型测试](07-tree-invariants-and-model-tests.md) | 部分已整理 | 全树检查、参考模型对照；页字节级校验未展开 |
 
-代码入口：[B+Tree 函数地图](../../btree/README.md)。本组实现的是内存中的树，未接入 Pager；落盘、提交与恢复见 [E 组](../05-storage-recovery/README.md)。实现与验证状态见 [当前状态](../../../docs/status.md)。
+代码入口：[B+Tree 函数地图](../../btree/README.md)。本组实现的是内存中的树，未接入 Pager；落盘、提交与恢复见 [E 组](../05-storage-recovery/README.md)。
 
 前置：[B+Tree 页内算法组](../03-btree-pages/README.md)。返回 [存储笔记总目录](../README.md)。

@@ -45,7 +45,7 @@ meta 与新页在同一次 fsync 中刷写时，顺序不确定：
 
 | 环节 | bbolt v1.5.0 |
 | --- | --- |
-| 映射 | 只读：`PROT_READ` + `MAP_SHARED`（[bolt_unix.go](../../../references/bbolt/bolt_unix.go) 的 `mmap`） |
+| 映射 | 只读：`PROT_READ` + `MAP_SHARED`（[bolt_unix.go](https://github.com/etcd-io/bbolt/blob/v1.5.0/bolt_unix.go) 的 `mmap`） |
 | 写数据页 | `tx.write` 用 `writeAt`（pwrite），不经 mmap |
 | 屏障 | 数据页写完后 `fdatasync`（故障注入点 `beforeSyncDataPages`） |
 | 发布 | `tx.writeMeta` 用 pwrite 写 meta，再 `fdatasync`（故障注入点 `beforeSyncMetaPage`） |

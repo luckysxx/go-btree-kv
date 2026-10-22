@@ -86,11 +86,11 @@ bbolt 没有单独的赋值：`db.meta0`、`db.meta1` 直接指向映射中的�
 
 ## 工业对照：bbolt
 
-- `tx.page`（[tx.go](../../../references/bbolt/tx.go)）先查事务的 dirty 页表 `tx.pages`，再读 mmap。
-- `tx.allocate` → `db.allocate`（[db.go](../../../references/bbolt/db.go)）：先从 freelist 分配，否则取 `rwtx.meta.Pgid()` 并推进高水位；必要时扩大映射。
+- `tx.page`（[tx.go](https://github.com/etcd-io/bbolt/blob/v1.5.0/tx.go)）先查事务的 dirty 页表 `tx.pages`，再读 mmap。
+- `tx.allocate` → `db.allocate`（[db.go](https://github.com/etcd-io/bbolt/blob/v1.5.0/db.go)）：先从 freelist 分配，否则取 `rwtx.meta.Pgid()` 并推进高水位；必要时扩大映射。
 - `tx.init` 复制 meta 给事务；只读事务与写事务都持有自己的副本。
-- `Meta`（[internal/common/meta.go](../../../references/bbolt/internal/common/meta.go)）含 magic、version、pageSize、flags、root、freelist、pgid（高水位）、txid、checksum；`Validate` 依次检查 magic、version、checksum。
-- `tx.Commit`（[tx.go](../../../references/bbolt/tx.go)）：`rebalance` 合并过稀节点 → `spill` 把事务中改过的内存节点一次写成页 → 写新 freelist → 高水位上升时 `db.grow` → `tx.write`（排序、pwrite、fdatasync）→ 可选 StrictMode 全树检查，失败即 panic 不发布 → `writeMeta`（写页 `txid % 2`，带校验和，fdatasync）。任何一步失败都 `rollback`（恢复 freelist），没有单独的失败状态。
+- `Meta`（[internal/common/meta.go](https://github.com/etcd-io/bbolt/blob/v1.5.0/internal/common/meta.go)）含 magic、version、pageSize、flags、root、freelist、pgid（高水位）、txid、checksum；`Validate` 依次检查 magic、version、checksum。
+- `tx.Commit`（[tx.go](https://github.com/etcd-io/bbolt/blob/v1.5.0/tx.go)）：`rebalance` 合并过稀节点 → `spill` 把事务中改过的内存节点一次写成页 → 写新 freelist → 高水位上升时 `db.grow` → `tx.write`（排序、pwrite、fdatasync）→ 可选 StrictMode 全树检查，失败即 panic 不发布 → `writeMeta`（写页 `txid % 2`，带校验和，fdatasync）。任何一步失败都 `rollback`（恢复 freelist），没有单独的失败状态。
 - `Meta.Write` 在写出前检查根页号与 freelist 页号低于高水位，否则 panic：不发布明显错误的 meta。
 
 ## 大纲

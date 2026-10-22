@@ -10,7 +10,7 @@
 
 ## 树对象放什么
 
-树是 KV API 之下的**索引层**：给定根页号和页存储，在页之间找 key。对外的 Open/Get/Put/Delete、事务、提交、读写者生命周期属于更上层（批次 4）。对照 bbolt 的分层：`DB（对外）→ Tx（事务）→ Bucket（一棵树的根）→ Cursor / node`，这里的树对象大致相当于 Bucket。
+树是 KV API 之下的**索引层**：给定根页号和页存储，在页之间找 key。对外的 Open/Get/Put/Delete、事务、提交、读写者生命周期属于更上层（E 组）。对照 bbolt 的分层：`DB（对外）→ Tx（事务）→ Bucket（一棵树的根）→ Cursor / node`，这里的树对象大致相当于 Bucket。
 
 ```go
 type tree struct {
@@ -67,7 +67,7 @@ func (t *tree) get(key []byte) (value []byte, found bool, err error)
 - Rust 用借用检查在编译期保证借用期间页不被改或释放；Go 没有生命周期，只能在运行时约定。
 - bbolt 在运行时"等借用结束"，粒度是事务：value 只在事务期间有效；释放的页按事务号挂起，更早的读事务结束后才复用；读事务持有 mmap 读锁，重新映射要等读者退出。
 
-结论：现阶段借用完全安全；引入页回收（D06 之后）或 Pager mmap（批次 4）时，要么按事务约定有效期，要么在对外 API 边界复制。
+结论：现阶段借用完全安全；引入页回收（D06 之后）或 Pager mmap（E 组）时，要么按事务约定有效期，要么在对外 API 边界复制。
 
 ## 常见错误
 

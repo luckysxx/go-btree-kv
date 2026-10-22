@@ -7,7 +7,7 @@ import (
 	"hash/fnv"
 	"sync"
 
-	"dbstudy/pager"
+	"github.com/luckysxx/go-btree-kv/pager"
 )
 
 // 文件布局：页 0、页 1 是两个 meta 槽位，轮流写；树的页从 2 开始。
